@@ -79,7 +79,42 @@
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="#E32020"
         android:text="Submit" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nilai Akhir"
+        android:textSize="10pt"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/edakhir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="10pt"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nilai Akhir"
+        android:textSize="10pt"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/edhuruf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="10pt"
+        android:text="" />
 </LinearLayout>
 
 
