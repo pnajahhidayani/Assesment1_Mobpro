@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, R.string.hadir_invalid, Toast.LENGTH_LONG).show()
             return
         }
-        val nilai = (tugas + uts + uas + hadir).toFloat()  / 4
+        val nilai = (tugas + uts + uas + hadir).toFloat()  / (4)
 
         binding.nilaiTextView.text = getString(R.string.nilai, nilai)
 }
