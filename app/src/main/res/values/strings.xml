@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">Nilai Mahasiswa</string>
+    <string name="app_name">Telkom University</string>
+    <string name="nama">Nama Mahasiswa</string>
+    <string name="tugas">Nilai Tugas</string>
+    <string name="uts">Nilai UTS</string>
+    <string name="uas">Nilai UAS</string>
+    <string name="hadir">Nilai Kehadiran</string>
+    <string name="submit">Submit</string>
+
+    <string name="nilai">Nilai Akhir: %1$.2f</string>
+    <string name="tugas_invalid">Nilai tugas tidak boleh kosong!</string>
+    <string name="uts_invalid">Nilai UTS tidak boleh kosong!</string>
+    <string name="uas_invalid">Nilai UAS tidak boleh kosong!</string>
+    <string name="hadir_invalid">Nilai kehadiran tidak boleh kosong!</string>
 </resources>
