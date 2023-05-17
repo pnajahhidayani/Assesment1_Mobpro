@@ -8,8 +8,16 @@
     <string name="submit">Submit</string>
 
     <string name="nilai">Nilai Akhir: %1$.2f</string>
+    <string name="kategori">Kategori: %1$s</string>
     <string name="tugas_invalid">Nilai tugas tidak boleh kosong!</string>
     <string name="uts_invalid">Nilai UTS tidak boleh kosong!</string>
     <string name="uas_invalid">Nilai UAS tidak boleh kosong!</string>
     <string name="hadir_invalid">Nilai kehadiran tidak boleh kosong!</string>
+    <string name="A">A</string>
+    <string name="B">B</string>
+    <string name="C">C</string>
+    <string name="D">D</string>
+    <string name="E">E</string>
+
+
 </resources>
