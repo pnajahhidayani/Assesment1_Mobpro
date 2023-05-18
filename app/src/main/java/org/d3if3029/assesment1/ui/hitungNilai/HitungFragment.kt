@@ -7,9 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelStore
+import androidx.navigation.findNavController
 import org.d3if3029.assesment1.R
 import org.d3if3029.assesment1.databinding.FragmentHitungBinding
 import org.d3if3029.assesment1.model.Hasil
+import org.d3if3029.assesment1.model.KategoriNilai
 
 
 class HitungFragment : Fragment() {
@@ -55,6 +59,24 @@ class HitungFragment : Fragment() {
     }
     private fun showResult(result: Hasil){
         binding.nilaiTextView.text = getString(R.string.nilai, result.nilai)
+        binding.kategoriTextView.text = getString(R.string.kategori, getKategoriLabel(result.kategori))
+        binding.saranButton.visibility = View.VISIBLE
     }
 
+    private fun getKategoriLabel(kategori: KategoriNilai):String{
+        val stringRes = when(kategori){
+            KategoriNilai.A->R.string.A
+            KategoriNilai.B->R.string.B
+            KategoriNilai.C->R.string.C
+            KategoriNilai.D->R.string.D
+            KategoriNilai.E->R.string.E
+        }
+        return getString(stringRes)
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.saranButton.setOnClickListener { viewModel.startNav() }
+    }
+    
 }
