@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelStore
 import androidx.navigation.findNavController
 import org.d3if3029.assesment1.R
@@ -76,7 +75,7 @@ class HitungFragment : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.saranButton.setOnClickListener { viewModel.startNav() }
+        super.onViewCreated(view, savedInstanceState)
     }
     
 }
