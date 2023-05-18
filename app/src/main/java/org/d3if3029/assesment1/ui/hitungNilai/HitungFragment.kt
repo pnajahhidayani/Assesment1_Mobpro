@@ -1,20 +1,15 @@
-package org.d3if3029.assesment1.ui
+package org.d3if3029.assesment1.ui.hitungNilai
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import org.d3if3029.assesment1.R
-import org.d3if3029.assesment1.databinding.ActivityMainBinding
 import org.d3if3029.assesment1.databinding.FragmentHitungBinding
+import org.d3if3029.assesment1.model.Hasil
 
 
 class HitungFragment : Fragment() {
@@ -57,5 +52,9 @@ class HitungFragment : Fragment() {
         val nilai = (tugas + uts + uas + hadir).toFloat()  / (4)
 
         binding.nilaiTextView.text = getString(R.string.nilai, nilai)
-}
+    }
+    private fun showResult(result: Hasil){
+        binding.nilaiTextView.text = getString(R.string.nilai, result.nilai)
+    }
+
 }

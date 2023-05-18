@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import org.d3if3029.assesment1.databinding.ActivityMainBinding
 import org.d3if3029.assesment1.model.KategoriNilai
 
@@ -18,6 +19,10 @@ import org.d3if3029.assesment1.model.KategoriNilai
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    private val viewModel: MainViewModel by lazy {
+        ViewModelProvider(this)[MainViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,22 +56,17 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, R.string.hadir_invalid, Toast.LENGTH_LONG).show()
             return
         }
-        val nilai = (uts.toDouble() * 0.2) + (uas.toDouble() * 0.35) + (tugas.toDouble() * 0.25) + (hadir.toDouble() * 0.2)
-        binding.nilaiTextView.text = getString(R.string.nilai, nilai)
 
-        val getKategori: String = if (nilai >= 80.0 && nilai <= 100.0) {
-            "A"
-        }else if (nilai >= 70.0 && nilai < 80.0){
-            "B"
-        }else if (nilai >= 60.0 && nilai <70.0){
-            "C"
-        }else if (nilai >= 50.0 && nilai < 60.0){
-            "D"
-        }else {
-            "E"
+    }
+    private  fun getKategoriLabel(kategori: KategoriNilai): String{
+        val stringRes = when (kategori) {
+            KategoriNilai.A -> R.string.A
+            KategoriNilai.B -> R.string.B
+            KategoriNilai.C -> R.string.C
+            KategoriNilai.D -> R.string.D
+            KategoriNilai.E -> R.string.E
         }
-        val kategori = getKategori
-        binding.kategoriTextView.text = getString(R.string.kategori, kategori)
+        return getString(stringRes)
     }
 
 }
