@@ -33,4 +33,6 @@
         <string name="saranE">Kenapa? kamu lagi gak bersemangat belajar? Angkat kepala kamu, mahkotanya jatuh tuh, kamu pasti bisa</string>
 
         <string name="lihat_saran">Lihat Saran</string>
+        <string name="bagikan">Bagikan</string>
+        <string name="bagikan_template">Nilai Akhir: %1$s kg\nKategori Nilai: A</string>
 </resources>

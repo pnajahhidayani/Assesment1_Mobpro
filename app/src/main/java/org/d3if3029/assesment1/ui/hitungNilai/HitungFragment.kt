@@ -1,5 +1,6 @@
 package org.d3if3029.assesment1.ui.hitungNilai
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelStore
 import androidx.navigation.findNavController
 import org.d3if3029.assesment1.R
@@ -52,14 +54,14 @@ class HitungFragment : Fragment() {
             Toast.makeText(context, R.string.hadir_invalid, Toast.LENGTH_LONG).show()
             return
         }
-        val nilai = (tugas + uts + uas + hadir).toFloat()  / (4)
+        val nilai = (uts.toDouble() * 0.2) + (uas.toDouble() * 0.35) + (tugas.toDouble() * 0.25) + (hadir.toDouble() * 0.2)
 
         binding.nilaiTextView.text = getString(R.string.nilai, nilai)
     }
     private fun showResult(result: Hasil){
         binding.nilaiTextView.text = getString(R.string.nilai, result.nilai)
         binding.kategoriTextView.text = getString(R.string.kategori, getKategoriLabel(result.kategori))
-        binding.saranButton.visibility = View.VISIBLE
+        binding.buttonGroup.visibility = View.VISIBLE
     }
 
     private fun getKategoriLabel(kategori: KategoriNilai):String{
@@ -76,6 +78,22 @@ class HitungFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.button.setOnClickListener { hitung() }
+        binding.saranButton.setOnClickListener { viewModel.mulaiNavigasi() }
+        binding.shareButton.setOnClickListener { shareData() }
+
+        viewModel.getHasilBmi().observe(requireActivity(), { showResult(it)})
+    }
+    private fun shareData() {
+        val messeage = getString(R.string.bagikan_template,
+        binding.nilaiTextView.text,
+        binding.kategoriTextView.text)
+    }
+    val shareIntent = Intent(Intent.ACTION_SEND)
+    shareIntent.setType("text/plain").putExtra(Intent.EXTRA_TEXT, message)
+    if (shareIntent.resolveActivity(
+    requireActivity().packageManager) !=null){
+        startActivity(shareIntent)
     }
     
 }
