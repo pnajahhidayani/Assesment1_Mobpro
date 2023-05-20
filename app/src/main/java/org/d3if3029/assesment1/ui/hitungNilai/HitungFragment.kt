@@ -68,7 +68,7 @@ class HitungFragment : Fragment() {
             hadir.toFloat()
         )
         //val nilai = (uts.toDouble() * 0.2) + (uas.toDouble() * 0.35) + (tugas.toDouble() * 0.25) + (hadir.toDouble() * 0.2)
-
+        //ini gak kepake karna udah manggil viewModel
         //binding.nilaiTextView.text = getString(R.string.nilai, nilai)
     }
 
