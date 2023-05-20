@@ -9,10 +9,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import org.d3if3029.assesment1.R
+import org.d3if3029.assesment1.SuggestionFragment
 import org.d3if3029.assesment1.databinding.FragmentHitungBinding
+import org.d3if3029.assesment1.databinding.FragmentSuggestionBinding
 import org.d3if3029.assesment1.model.Hasil
 import org.d3if3029.assesment1.model.KategoriNilai
 
@@ -21,6 +25,9 @@ class HitungFragment : Fragment() {
 
     private lateinit var binding: FragmentHitungBinding
 
+    private val viewModel: HitungViewModel by lazy {
+        ViewModelProvider(this)[HitungViewModel::class.java]
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,7 +37,7 @@ class HitungFragment : Fragment() {
         return binding.root
     }
 
-    private fun nilai(){
+    fun nilai() {
         val tugas = binding.tugasInp.text.toString()
         if (TextUtils.isEmpty(tugas)) {
             Toast.makeText(context, R.string.tugas_invalid, Toast.LENGTH_LONG).show()
@@ -54,11 +61,19 @@ class HitungFragment : Fragment() {
             Toast.makeText(context, R.string.hadir_invalid, Toast.LENGTH_LONG).show()
             return
         }
-        val nilai = (uts.toDouble() * 0.2) + (uas.toDouble() * 0.35) + (tugas.toDouble() * 0.25) + (hadir.toDouble() * 0.2)
+        viewModel.hitung(
+            uts.toFloat(),
+            uas.toFloat(),
+            tugas.toFloat(),
+            hadir.toFloat()
+        )
+        //val nilai = (uts.toDouble() * 0.2) + (uas.toDouble() * 0.35) + (tugas.toDouble() * 0.25) + (hadir.toDouble() * 0.2)
 
-        binding.nilaiTextView.text = getString(R.string.nilai, nilai)
+        //binding.nilaiTextView.text = getString(R.string.nilai, nilai)
     }
-    private fun showResult(result: Hasil){
+
+    private fun showResult(result: Hasil?){
+        if (result == null) return
         binding.nilaiTextView.text = getString(R.string.nilai, result.nilai)
         binding.kategoriTextView.text = getString(R.string.kategori, getKategoriLabel(result.kategori))
         binding.buttonGroup.visibility = View.VISIBLE
@@ -75,25 +90,37 @@ class HitungFragment : Fragment() {
         return getString(stringRes)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.button.setOnClickListener { hitung() }
-        binding.saranButton.setOnClickListener { viewModel.mulaiNavigasi() }
+        binding.button.setOnClickListener { nilai() }
+        binding.saranButton.setOnClickListener { viewModel.startNav() }
         binding.shareButton.setOnClickListener { shareData() }
 
-        viewModel.getHasilBmi().observe(requireActivity(), { showResult(it)})
+        viewModel.getNilai().observe(requireActivity()) { showResult(it) }
+        viewModel.getNav().observe(viewLifecycleOwner) {
+            if (it == null) return@observe
+            findNavController().navigate(
+                HitungFragmentDirections
+                    .actionHitungFragmentToSuggestionFragment(it)
+            )
+            viewModel.endNav()
+        }
     }
     private fun shareData() {
-        val messeage = getString(R.string.bagikan_template,
-        binding.nilaiTextView.text,
-        binding.kategoriTextView.text)
+        val message = getString(
+            R.string.bagikan_template,
+            binding.nilaiTextView.text
+        )
+
+        val msgKat = message + " " + binding.kategoriTextView.text
+
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.setType("text/plain").putExtra(Intent.EXTRA_TEXT, msgKat)
+        if (shareIntent.resolveActivity(
+                requireActivity().packageManager
+            ) != null
+        ) {
+            startActivity(shareIntent)
+        }
     }
-    val shareIntent = Intent(Intent.ACTION_SEND)
-    shareIntent.setType("text/plain").putExtra(Intent.EXTRA_TEXT, message)
-    if (shareIntent.resolveActivity(
-    requireActivity().packageManager) !=null){
-        startActivity(shareIntent)
-    }
-    
 }

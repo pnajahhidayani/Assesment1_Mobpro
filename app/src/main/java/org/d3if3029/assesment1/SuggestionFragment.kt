@@ -27,6 +27,11 @@ class SuggestionFragment : Fragment() {
 //        // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_suggestion, container, false)
     }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = FragmentSuggestionBinding.inflate(layoutInflater)
+        binding.root
+    }
 
     private fun getSaranBasedOnNilai(kategori: KategoriNilai) {
         val actionBar = (requireActivity() as AppCompatActivity).supportActionBar

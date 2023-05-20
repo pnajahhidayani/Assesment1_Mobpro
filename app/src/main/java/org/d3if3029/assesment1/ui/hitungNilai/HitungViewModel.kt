@@ -10,25 +10,25 @@ class HitungViewModel : ViewModel() {
     private val kategori = MutableLiveData<KategoriNilai>()
 
     private val hasil = MutableLiveData<Hasil?>()
-    val nilai:LiveData<Hasil?> get() = hasil
-    fun startNav(){
+    fun startNav() {
         navigasi.value = hasil.value?.kategori
     }
 
-    fun  endNav(){
+    fun endNav() {
         navigasi.value = null
     }
 
-    fun getNav() : LiveData<KategoriNilai?> = navigasi
+    fun getNav(): LiveData<KategoriNilai?> = navigasi
     private val navigasi = MutableLiveData<KategoriNilai?>()
 
     private val kategoriNilaiLiveData: MutableLiveData<KategoriNilai> = MutableLiveData()
-    val kategoriNilai: LiveData<KategoriNilai> get() = kategoriNilaiLiveData
-
-
-    private fun hitung(uts: Float, uas: Float, tugas: Float, hadir: Float) {
+    fun kategoriNilai(): LiveData<KategoriNilai> = kategoriNilaiLiveData
+    fun getNilai():LiveData<Hasil?> = hasil
+    fun hitung(uts: Float, uas: Float, tugas: Float, hadir: Float) {
         val nilai =
-            (uts.toDouble() * 0.2) + (uas.toDouble() * 0.35) + (tugas.toDouble() * 0.25) + (hadir.toDouble() * 0.2)
+            (uts.toDouble() * 0.2) + (uas.toDouble() * 0.35) +
+                    (tugas.toDouble() * 0.25) +
+                    (hadir.toDouble() * 0.2)
         val kategori: KategoriNilai = if (nilai >= 80.0 && nilai <= 100.0) {
             KategoriNilai.A
         } else if (nilai >= 70.0 && nilai < 80.0) {

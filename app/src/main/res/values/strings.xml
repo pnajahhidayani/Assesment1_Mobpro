@@ -34,5 +34,5 @@
 
         <string name="lihat_saran">Lihat Saran</string>
         <string name="bagikan">Bagikan</string>
-        <string name="bagikan_template">Nilai Akhir: %1$s kg\nKategori Nilai: A</string>
+        <string name="bagikan_template">Nilai Akhir: %1$s kg\nKategori Nilai: </string>
 </resources>
