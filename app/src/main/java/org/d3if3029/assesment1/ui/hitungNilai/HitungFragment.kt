@@ -1,22 +1,23 @@
 package org.d3if3029.assesment1.ui.hitungNilai
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStore
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import org.d3if3029.assesment1.MainActivity
 import org.d3if3029.assesment1.R
-import org.d3if3029.assesment1.SuggestionFragment
 import org.d3if3029.assesment1.databinding.FragmentHitungBinding
-import org.d3if3029.assesment1.databinding.FragmentSuggestionBinding
 import org.d3if3029.assesment1.model.Hasil
 import org.d3if3029.assesment1.model.KategoriNilai
 
@@ -96,6 +97,8 @@ class HitungFragment : Fragment() {
         binding.saranButton.setOnClickListener { viewModel.startNav() }
         binding.shareButton.setOnClickListener { shareData() }
 
+        viewModel.scheduleUpdater(requireActivity().application)
+
         viewModel.getNilai().observe(requireActivity()) { showResult(it) }
         viewModel.getNav().observe(viewLifecycleOwner) {
             if (it == null) return@observe
@@ -104,8 +107,11 @@ class HitungFragment : Fragment() {
                     .actionHitungFragmentToSuggestionFragment(it)
             )
             viewModel.endNav()
+
         }
+
     }
+
     private fun shareData() {
         val message = getString(
             R.string.bagikan_template,
@@ -121,6 +127,21 @@ class HitungFragment : Fragment() {
             ) != null
         ) {
             startActivity(shareIntent)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun requestNotificationPermission() {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                MainActivity.PERMISSION_REQUEST_CODE
+            )
         }
     }
 }

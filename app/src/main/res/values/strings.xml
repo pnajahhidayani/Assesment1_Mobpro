@@ -35,4 +35,6 @@
         <string name="lihat_saran">Lihat Saran</string>
         <string name="bagikan">Bagikan</string>
         <string name="bagikan_template">Nilai Akhir: %1$s kg\nKategori Nilai: </string>
+        <string name="channel_name">Update Gan!</string>
+        <string name="channel_desc">Update otomatis nilai lu yak brou~</string>
 </resources>
