@@ -37,4 +37,8 @@
         <string name="bagikan_template">Nilai Akhir: %1$s kg\nKategori Nilai: </string>
         <string name="channel_name">Update Gan!</string>
         <string name="channel_desc">Update otomatis nilai lu yak brou~</string>
+
+    <string name="notif_title">Saatnya hitung Nilai akhir Brou!</string>
+    <string name="notif_text">Hitung nilai akhir kamu deh, lulus gak tuh..</string>
+    <string name="koneksi_error">Koneksi Error</string>
 </resources>

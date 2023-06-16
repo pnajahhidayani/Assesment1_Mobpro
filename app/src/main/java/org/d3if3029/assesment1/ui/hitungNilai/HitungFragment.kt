@@ -20,6 +20,7 @@ import org.d3if3029.assesment1.R
 import org.d3if3029.assesment1.databinding.FragmentHitungBinding
 import org.d3if3029.assesment1.model.Hasil
 import org.d3if3029.assesment1.model.KategoriNilai
+import org.d3if3029.assesment1.network.NilaiApi
 
 
 class HitungFragment : Fragment() {
@@ -100,6 +101,9 @@ class HitungFragment : Fragment() {
         viewModel.scheduleUpdater(requireActivity().application)
 
         viewModel.getNilai().observe(requireActivity()) { showResult(it) }
+        viewModel.getStatus().observe(viewLifecycleOwner) {
+            updateProgress(it)
+        }
         viewModel.getNav().observe(viewLifecycleOwner) {
             if (it == null) return@observe
             findNavController().navigate(
@@ -107,7 +111,6 @@ class HitungFragment : Fragment() {
                     .actionHitungFragmentToSuggestionFragment(it)
             )
             viewModel.endNav()
-
         }
 
     }
@@ -144,4 +147,22 @@ class HitungFragment : Fragment() {
             )
         }
     }
+    fun updateProgress(status: NilaiApi.ApiStatus) {
+        when (status) {
+            NilaiApi.ApiStatus.LOADING -> {
+                binding.progressBar.visibility = View.VISIBLE
+            }
+            NilaiApi.ApiStatus.SUCCESS -> {
+                binding.progressBar.visibility = View.GONE
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    requestNotificationPermission()
+                }
+            }
+            NilaiApi.ApiStatus.FAILED -> {
+                binding.progressBar.visibility = View.GONE
+                binding.networkError.visibility = View.VISIBLE
+            }
+        }
+    }
 }
+
